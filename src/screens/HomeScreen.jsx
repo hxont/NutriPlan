@@ -17,6 +17,8 @@ class HomeScreen extends Component {
     }
 
     render() {
+        const { navigation } = this.props;
+
         const pieData = [
             {value: 50, color: '#5F8262', text: '50%', textColor: 'white'},
             {value: 30, color: '#83AD70', text: '30%', textColor: 'white'},
@@ -31,7 +33,7 @@ class HomeScreen extends Component {
                         <View style={styles.titleWrapper}>
                             <Image source={title} style={styles.titleImage} resizeMode="contain"/>
                         </View>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
                             <IconI name="person-circle-outline" size={30} color="#D9D9D9"/>
                         </TouchableOpacity>
                     </View>
@@ -110,12 +112,13 @@ class HomeScreen extends Component {
                     </ScrollView>
 
                     <View style={styles.tapMenu}>
-                        <TouchableOpacity><IconO name="home" size={25} color="#D9D9D9"/></TouchableOpacity>
-                        <TouchableOpacity><IconF name="calendar" size={25} color="#D9D9D9"/></TouchableOpacity>
-                        <TouchableOpacity><IconF name="map-pin" size={25} color="#D9D9D9"/></TouchableOpacity>
-                        <TouchableOpacity><IconI name="chatbubble-ellipses-outline" size={25}
-                                                 color="#D9D9D9"/></TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}><IconO name="home" size={25} color="#D9D9D9"/></TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('CalendarScreen')}><IconF name="calendar" size={25} color="#D9D9D9"/></TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('MapScreen')}><IconF name="map-pin" size={25} color="#D9D9D9"/></TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('AiChatScreen')}><IconI name="chatbubble-ellipses-outline" size={25}
+                                                                                                     color="#D9D9D9"/></TouchableOpacity>
                     </View>
+
                 </SafeAreaView>
             </>
         );

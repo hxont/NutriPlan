@@ -1,5 +1,15 @@
 import React, {Component} from 'react';
-import {Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+    Dimensions,
+    Image,
+    Modal,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
 import {PieChart} from 'react-native-gifted-charts';
 
 import IconI from 'react-native-vector-icons/Ionicons';
@@ -14,10 +24,19 @@ const {width} = Dimensions.get('window');
 class HomeScreen extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            modalVisible: false,
+        };
+    }
+
+    setModalVisible(visible) {
+        this.setState({ modalVisible: visible });
     }
 
     render() {
         const { navigation } = this.props;
+        const { modalVisible } = this.state;
+
 
         const pieData = [
             {value: 50, color: '#5F8262', text: '50%', textColor: 'white'},
@@ -73,7 +92,7 @@ class HomeScreen extends Component {
                                     <Text style={{fontSize: 18, fontWeight: 'bold', color: '#4E4236'}}>아침</Text>
                                     <Text style={{fontSize: 20, fontWeight: 'ultralight', color: '#4E4236'}}>100
                                         kcal</Text>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.setModalVisible(true)}>
                                         <IconF name="search" size={30} color="#4C4334"/>
                                     </TouchableOpacity>
                                 </View>
@@ -110,6 +129,43 @@ class HomeScreen extends Component {
                             </View>
                         </View>
                     </ScrollView>
+
+                    <View style={styles.modalBox}>
+                        {/* 모달 */}
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => this.setModalVisible(false)}
+                        >
+                            <View style={styles.modalContainer}>
+                                <View style={styles.modalContent}>
+                                    <TouchableOpacity
+                                        style={styles.closeButton}
+                                        onPress={() => this.setModalVisible(false)}
+                                    >
+                                        <IconI name="close" size={24} color="black" />
+                                    </TouchableOpacity>
+                                    <Text style={{fontWeight: 'bold', fontSize: 20}}>아침</Text>
+                                    <View style={styles.mealInfo}>
+                                        <Text style={{fontSize: 14, marginHorizontal: '5%'}}>삼겹김치찜</Text>
+                                        <Text style={{fontSize: 14, marginHorizontal: '5%', color:'#666666'}}>250kcal</Text>
+                                    </View>
+                                    <TouchableOpacity
+                                        style={styles.addMealButton}
+                                        onPress={() => {
+                                            this.setModalVisible(false);  // 먼저 모달을 닫음
+                                            navigation.navigate('AddMealScreen');  // 그 후 화면 이동
+                                        }}
+                                    >
+                                        <Text style={{ color: 'white', fontWeight: 'bold' }}>식단 추가하기</Text>
+                                    </TouchableOpacity>
+
+
+                                </View>
+                            </View>
+                        </Modal>
+                    </View>
 
                     <View style={styles.tapMenu}>
                         <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}><IconO name="home" size={25} color="#D9D9D9"/></TouchableOpacity>
@@ -157,9 +213,10 @@ const styles = StyleSheet.create({
     content: {
         backgroundColor: '#EEF6FF',
         width: '90%',
+        height: '95%',
         borderRadius: 10,
         alignItems: 'center',
-        marginBottom: '12%',
+        marginBottom: '5%',
     },
     period: {
         backgroundColor: '#4C4334',
@@ -246,6 +303,52 @@ const styles = StyleSheet.create({
         backgroundColor: '#FCFBFC',
         paddingTop: '5%',
         paddingBottom: '8%',
+    },
+    modalBox: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
+    },
+    modalContent: {
+        width: 300,
+        height: 300,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        //justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+        position: 'relative',
+    },
+    closeButton: {
+        position: 'absolute',
+        top: 16,
+        right: 16,
+    },
+    mealInfo: {
+        marginTop: '10%',
+        backgroundColor: '#f2f2f2',
+        width: '98%',
+        height: '18%',
+        borderRadius: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    addMealButton: {
+        backgroundColor: '#4C4334',
+        borderRadius: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '60%',
+        height: '14%',
+        bottom: -130,
     },
 });
 

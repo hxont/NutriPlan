@@ -11,6 +11,7 @@ import MapScreen from './src/screens/MapScreen';
 import AiChatScreen from './src/screens/AiChatScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import InfoEditScreen from './src/screens/InfoEditScreen';
+import AddMealScreen from './src/screens/AddMealScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -35,6 +36,7 @@ class App extends Component {
                         <Stack.Screen name="AiChatScreen" component={AiChatScreen} />
                         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
                         <Stack.Screen name="InfoEditScreen" component={InfoEditScreen} />
+                        <Stack.Screen name="AddMealScreen" component={AddMealScreen} />
                     </Stack.Navigator>
                 </NavigationContainer>
         );
